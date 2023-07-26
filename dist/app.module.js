@@ -13,7 +13,9 @@ const config_1 = require("@nestjs/config");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const news_module_1 = require("./news/news.module");
-const news_entity_1 = require("./news/entities/news.entity");
+const user_module_1 = require("./user/user.module");
+const auth_module_1 = require("./auth/auth.module");
+const course_module_1 = require("./course/course.module");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -27,10 +29,13 @@ exports.AppModule = AppModule = __decorate([
                 username: process.env.DB_USER,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_NAME,
-                entities: [news_entity_1.NewsEntity],
+                entities: [__dirname + '/**/*.entity{.js, .ts}'],
                 synchronize: true,
             }),
             news_module_1.NewsModule,
+            user_module_1.UserModule,
+            auth_module_1.AuthModule,
+            course_module_1.CourseModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

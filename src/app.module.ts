@@ -8,6 +8,7 @@ import { NewsModule } from './news/news.module';
 import {NewsEntity} from "./news/entities/news.entity";
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { CourseModule } from './course/course.module';
 
 @Module({
   imports: [
@@ -19,12 +20,13 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [NewsEntity],
+      entities: [__dirname + '/**/*.entity{.js, .ts}'],
       synchronize: true,
     }),
     NewsModule,
     UserModule,
     AuthModule,
+    CourseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
