@@ -6,16 +6,17 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({credentials: true, origin: true});
+  app.setGlobalPrefix('api');
 
   const config = new DocumentBuilder()
       .setTitle('Тестовый проект')
       .setVersion('1.0')
+      .setBasePath('api')
       .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
-  //app.setGlobalPrefix('api');
   await app.listen(8080);
 }
 bootstrap();
