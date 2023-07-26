@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { NewsModule } from './news/news.module';
 import {NewsEntity} from "./news/entities/news.entity";
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import {NewsEntity} from "./news/entities/news.entity";
       synchronize: true,
     }),
     NewsModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
