@@ -9,6 +9,7 @@ import {NewsEntity} from "./news/entities/news.entity";
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { CourseModule } from './course/course.module';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CourseModule } from './course/course.module';
     UserModule,
     AuthModule,
     CourseModule,
+    ScheduleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

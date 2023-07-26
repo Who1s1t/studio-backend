@@ -5,9 +5,10 @@ import {
     ManyToMany,
     JoinTable,
     CreateDateColumn,
-    UpdateDateColumn
+    UpdateDateColumn, OneToMany
 } from 'typeorm';
 import {UserEntity} from '../../user/entities/user.entity'
+import {ScheduleEntity} from "../../schedule/entities/schedule.entity";
 
 @Entity('course')
 export class CourseEntity {
@@ -29,6 +30,9 @@ export class CourseEntity {
     @ManyToMany(()=> UserEntity, user => user.courses)
     @JoinTable()
     users: UserEntity[];
+
+    @OneToMany(() => ScheduleEntity, schedule => schedule.course)
+    schedule: ScheduleEntity[];
 
     @CreateDateColumn()
     createdDate: Date;
