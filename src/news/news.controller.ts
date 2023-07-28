@@ -2,7 +2,7 @@ import {
   Body,
   Controller, Delete,
   Get, Param, Patch,
-  Post,
+  Post, UsePipes, ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -15,6 +15,7 @@ import { UpdateNewsDto } from './dto/update-news.dto';
 export class NewsController {
   constructor(private readonly newsService: NewsService) {}
   @Post()
+  @UsePipes(new ValidationPipe())
   create(@Body() createNewsDto: CreateNewsDto){
     return this.newsService.create(createNewsDto)
   }
