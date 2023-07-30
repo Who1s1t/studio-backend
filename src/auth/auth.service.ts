@@ -2,7 +2,7 @@ import {BadRequestException, Injectable, UnauthorizedException} from '@nestjs/co
 import {UserService} from "../user/user.service";
 import * as argon2 from "argon2";
 import {JwtService} from "@nestjs/jwt";
-import {IUSer} from "../types/types";
+import {IUser} from "../types/types";
 
 @Injectable()
 export class AuthService {
@@ -19,7 +19,7 @@ export class AuthService {
         throw new UnauthorizedException("Неверный Email или пароль!")
     }
 
-    async login(user: IUSer) {
+    async login(user: IUser) {
         const payload = {id: user.id, email: user.email,firstName: user.firstName, lastName: user.lastName, role: user.role };
         return {
             access_token: this.jwtService.sign(payload),
