@@ -48,7 +48,7 @@ let NewsService = exports.NewsService = class NewsService {
             }
         });
         if (!news)
-            throw new common_1.NotFoundException("News not found!");
+            throw new common_1.NotFoundException("Новость не найдена!");
         return await this.newsRepository.update(id, updateNewsDto);
     }
     async remove(id) {
@@ -58,7 +58,7 @@ let NewsService = exports.NewsService = class NewsService {
             }
         });
         if (!news)
-            throw new common_1.NotFoundException("News not found!");
+            throw new common_1.NotFoundException("Новость не найдена!");
         return await this.newsRepository.delete(id);
     }
 };

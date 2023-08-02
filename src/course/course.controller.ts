@@ -1,13 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe} from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import {ApiTags} from "@nestjs/swagger";
 
 @Controller('course')
+@ApiTags('course')
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe())
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.courseService.create(createCourseDto);
   }
@@ -23,6 +26,7 @@ export class CourseController {
   }
 
   @Patch(':id')
+  @UsePipes(new ValidationPipe())
   update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
     return this.courseService.update(+id, updateCourseDto);
   }

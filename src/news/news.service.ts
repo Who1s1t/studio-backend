@@ -10,6 +10,7 @@ export class NewsService {
   constructor(
       @InjectRepository(NewsEntity) private newsRepository: Repository<NewsEntity>,
   ) {}
+
   async create(createNewsDto: CreateNewsDto){
     const newNews = {
       title: createNewsDto.title,
@@ -20,9 +21,11 @@ export class NewsService {
     }
     return await this.newsRepository.save(newNews)
   };
+
   async findAll() {
     return await this.newsRepository.find();
   }
+
   async findOne(id: number) {
     return await this.newsRepository.findOne({
       where:{
@@ -30,22 +33,24 @@ export class NewsService {
       }
     });
   }
+
   async update(id: number, updateNewsDto:UpdateNewsDto) {
     const news = await this.newsRepository.findOne({
       where:{
         id
       }
     })
-    if (!news) throw new NotFoundException("News not found!")
+    if (!news) throw new NotFoundException("Новость не найдена!")
     return await this.newsRepository.update(id, updateNewsDto)
   }
+
   async remove(id: number){
     const news = await this.newsRepository.findOne({
       where:{
         id
       }
     })
-    if (!news) throw new NotFoundException("News not found!")
+    if (!news) throw new NotFoundException("Новость не найдена!")
     return await this.newsRepository.delete(id)
   }
 }
