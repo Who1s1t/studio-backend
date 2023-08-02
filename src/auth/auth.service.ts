@@ -2,7 +2,7 @@ import {BadRequestException, Injectable, UnauthorizedException} from '@nestjs/co
 import {UserService} from "../user/user.service";
 import * as argon2 from "argon2";
 import {JwtService} from "@nestjs/jwt";
-import {IUser} from "../types/types";
+import {IUser} from "./types/user.types";
 
 @Injectable()
 export class AuthService {
