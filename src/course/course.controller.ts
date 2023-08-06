@@ -9,7 +9,7 @@ import {ApiTags} from "@nestjs/swagger";
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
-  @Post()
+  @Post("create")
   @UsePipes(new ValidationPipe())
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.courseService.create(createCourseDto);
@@ -25,13 +25,13 @@ export class CourseController {
     return this.courseService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch("update/:id")
   @UsePipes(new ValidationPipe())
   update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
     return this.courseService.update(+id, updateCourseDto);
   }
 
-  @Delete(':id')
+  @Delete("delete/:id")
   remove(@Param('id') id: string) {
     return this.courseService.remove(+id);
   }

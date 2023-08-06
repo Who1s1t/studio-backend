@@ -14,7 +14,7 @@ import { UpdateNewsDto } from './dto/update-news.dto';
 @ApiTags('news')
 export class NewsController {
   constructor(private readonly newsService: NewsService) {}
-  @Post()
+  @Post("create")
   @UsePipes(new ValidationPipe())
   create(@Body() createNewsDto: CreateNewsDto){
     return this.newsService.create(createNewsDto)
@@ -27,14 +27,14 @@ export class NewsController {
   findOne(@Param('id') id: string) {
     return this.newsService.findOne(+id);
   }
-  @Patch(":id")
+  @Patch("update/:id")
   @UsePipes(new ValidationPipe())
   update(
       @Param('id') id: string,
       @Body() updateNewsDto:UpdateNewsDto, ) {
     return this.newsService.update(+id, updateNewsDto);
   }
-  @Delete(":id")
+  @Delete("delete/:id")
   remove(
       @Param('id') id: string) {
     return this.newsService.remove(+id);

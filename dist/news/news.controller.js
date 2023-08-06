@@ -39,7 +39,7 @@ let NewsController = exports.NewsController = class NewsController {
     }
 };
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)("create"),
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -60,7 +60,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], NewsController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Patch)(":id"),
+    (0, common_1.Patch)("update/:id"),
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -69,7 +69,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], NewsController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(":id"),
+    (0, common_1.Delete)("delete/:id"),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
