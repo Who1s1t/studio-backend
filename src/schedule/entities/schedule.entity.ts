@@ -13,7 +13,10 @@ export class ScheduleEntity {
     id: number;
 
     @Column()
-    date: Date;
+    date: string;
+
+    @Column()
+    time: string;
 
     @ManyToOne(()=> CourseEntity, course => course.schedule)
     @JoinColumn({name: "course_id"})

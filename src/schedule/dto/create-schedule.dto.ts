@@ -1,11 +1,15 @@
 import {IsDate, IsNotEmpty} from "class-validator";
+import {CourseEntity} from "../../course/entities/course.entity";
 
 export class CreateScheduleDto {
 
-    @IsDate()
-    date: Date
+    @IsNotEmpty()
+    date: string
 
     @IsNotEmpty()
-    course: number
+    time: string
+
+    @IsNotEmpty()
+    course: CourseEntity
 
 }

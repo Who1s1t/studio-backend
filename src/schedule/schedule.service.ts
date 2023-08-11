@@ -11,18 +11,26 @@ export class ScheduleService {
       @InjectRepository(ScheduleEntity) private scheduleRepository: Repository<ScheduleEntity>,
   ) {}
 
-  create(createScheduleDto: CreateScheduleDto) {
+  async create(createScheduleDto: CreateScheduleDto) {
+    const newSchedule = {
+      time: createScheduleDto.time,
+      date: createScheduleDto.date,
+      course: createScheduleDto.course,
+    }
+    return await this.scheduleRepository.save(newSchedule)
+  };
 
-    return 'This action adds a new schedule';
+  async findByDate(date: string ) {
+    return await this.scheduleRepository.find({
+      where:{
+        date
+      },
+      relations: {
+        course: true,
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all schedule`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} schedule`;
-  }
 
   update(id: number, updateScheduleDto: UpdateScheduleDto) {
     return `This action updates a #${id} schedule`;

@@ -15,14 +15,10 @@ export class ScheduleController {
     return this.scheduleService.create(createScheduleDto);
   }
 
-  @Get()
-  findAll() {
-    return this.scheduleService.findAll();
-  }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.scheduleService.findOne(+id);
+  @Get(':date')
+  findByDate(@Param('date')date: string) {
+    return this.scheduleService.findByDate(date);
   }
 
   @Patch("update/:id")
