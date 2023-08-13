@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import {InjectRepository} from "@nestjs/typeorm";
@@ -32,11 +32,23 @@ export class ScheduleService {
   }
 
 
-  update(id: number, updateScheduleDto: UpdateScheduleDto) {
-    return `This action updates a #${id} schedule`;
+  async update(id: number, updateScheduleDto: UpdateScheduleDto) {
+    const schedule = await this.scheduleRepository.findOne({
+      where:{
+        id
+      }
+    })
+    if (!schedule) throw new NotFoundException("Урок не найден!")
+    return await this.scheduleRepository.update(id, updateScheduleDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} schedule`;
+  async remove(id: number) {
+    const schedule = await this.scheduleRepository.findOne({
+      where:{
+        id
+      }
+    })
+    if (!schedule) throw new NotFoundException("Урок не найден!")
+    return await this.scheduleRepository.delete(id)
   }
 }
