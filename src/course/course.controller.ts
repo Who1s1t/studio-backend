@@ -1,8 +1,19 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe, UploadedFile, MaxFileSizeValidator, FileTypeValidator, ParseFilePipe, UseInterceptors,
+} from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
-import {ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiConsumes, ApiTags} from "@nestjs/swagger";
+import {FileInterceptor} from "@nestjs/platform-express";
 
 @Controller('course')
 @ApiTags('course')
@@ -11,8 +22,35 @@ export class CourseController {
 
   @Post("create")
   @UsePipes(new ValidationPipe())
-  create(@Body() createCourseDto: CreateCourseDto) {
-    return this.courseService.create(createCourseDto);
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties:{
+        name: { type: 'string' },
+        price: { type: 'integer' },
+        shortDescription: { type: 'string' },
+        fullDescription: { type: 'string' },
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  create(@Body() createCourseDto: CreateCourseDto,@UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1000000 }),
+          new FileTypeValidator({ fileType: /.(jpg|jpeg|png)$/ }),
+        ],
+      }),
+  )
+      file: Express.Multer.File, )
+    {
+
+    return this.courseService.create(createCourseDto, file);
   }
 
   @Get()

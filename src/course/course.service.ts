@@ -11,7 +11,7 @@ export class CourseService {
       @InjectRepository(CourseEntity) private courseRepository: Repository<CourseEntity>,
   ) {}
 
-  async create(createCourseDto: CreateCourseDto) {
+  async create(createCourseDto: CreateCourseDto, file: Express.Multer.File) {
     const newCourse = {
       name: createCourseDto.name,
       price: createCourseDto.price,
