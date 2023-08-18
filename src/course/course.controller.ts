@@ -9,6 +9,7 @@ import {
   UsePipes,
   ValidationPipe, UploadedFile, MaxFileSizeValidator, FileTypeValidator, ParseFilePipe, UseInterceptors,
 } from '@nestjs/common';
+import { diskStorage } from 'multer';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
@@ -42,7 +43,7 @@ export class CourseController {
   create(@Body() createCourseDto: CreateCourseDto,@UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 1000000 }),
+          new MaxFileSizeValidator({ maxSize: 10000000 }),
           new FileTypeValidator({ fileType: /.(jpg|jpeg|png)$/ }),
         ],
       }),
