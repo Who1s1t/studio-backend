@@ -9,6 +9,7 @@ import {
   UsePipes,
   ValidationPipe, UploadedFile, MaxFileSizeValidator, FileTypeValidator, ParseFilePipe, UseInterceptors,
 } from '@nestjs/common';
+import { editFileName, imageFileFilter } from '../utils/file-upload.utils';
 import { diskStorage } from 'multer';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
@@ -31,24 +32,24 @@ export class CourseController {
         price: { type: 'integer' },
         shortDescription: { type: 'string' },
         fullDescription: { type: 'string' },
-        file: {
+        image: {
           type: 'string',
           format: 'binary',
         },
       },
     },
   })
-  @UseInterceptors(FileInterceptor('file'))
-  @ApiConsumes('multipart/form-data')
-  create(@Body() createCourseDto: CreateCourseDto,@UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new MaxFileSizeValidator({ maxSize: 10000000 }),
-          new FileTypeValidator({ fileType: /.(jpg|jpeg|png)$/ }),
-        ],
+  @UseInterceptors(
+      FileInterceptor('image', {
+        storage: diskStorage({
+          destination: './uploads/img',
+          filename: editFileName,
+        }),
+        fileFilter: imageFileFilter,
       }),
   )
-      file: Express.Multer.File, )
+  @ApiConsumes('multipart/form-data')
+  create(@Body() createCourseDto: CreateCourseDto,@UploadedFile() file: Express.Multer.File, )
     {
 
     return this.courseService.create(createCourseDto, file);
