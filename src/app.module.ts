@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { CourseModule } from './course/course.module';
 import { ScheduleModule } from './schedule/schedule.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ScheduleModule } from './schedule/schedule.module';
     AuthModule,
     CourseModule,
     ScheduleModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -17,6 +17,7 @@ const user_module_1 = require("./user/user.module");
 const auth_module_1 = require("./auth/auth.module");
 const course_module_1 = require("./course/course.module");
 const schedule_module_1 = require("./schedule/schedule.module");
+const mail_module_1 = require("./mail/mail.module");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -38,6 +39,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             course_module_1.CourseModule,
             schedule_module_1.ScheduleModule,
+            mail_module_1.MailModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
