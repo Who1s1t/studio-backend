@@ -3,7 +3,6 @@ import { CourseService } from './course.service';
 import { CourseController } from './course.controller';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {CourseEntity} from "./entities/course.entity";
-import {MulterModule} from "@nestjs/platform-express";
 
 @Module({
   controllers: [CourseController],

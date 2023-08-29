@@ -10,6 +10,7 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const config_1 = require("@nestjs/config");
+const mailer_1 = require("@nestjs-modules/mailer");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const news_module_1 = require("./news/news.module");
@@ -18,6 +19,7 @@ const auth_module_1 = require("./auth/auth.module");
 const course_module_1 = require("./course/course.module");
 const schedule_module_1 = require("./schedule/schedule.module");
 const mail_module_1 = require("./mail/mail.module");
+const ejs_adapter_1 = require("@nestjs-modules/mailer/dist/adapters/ejs.adapter");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -33,6 +35,30 @@ exports.AppModule = AppModule = __decorate([
                 database: process.env.DB_NAME,
                 entities: [__dirname + '/**/*.entity{.js, .ts}'],
                 synchronize: true,
+            }),
+            mailer_1.MailerModule.forRoot({
+                transport: {
+                    host: process.env.MAIL_HOST,
+                    port: 465,
+                    secure: true,
+                    auth: {
+                        user: process.env.MAIL_USER,
+                        pass: process.env.MAIL_PASS,
+                    },
+                    tls: {
+                        rejectUnauthorized: false,
+                    },
+                },
+                defaults: {
+                    from: `M-Courses" <M-Courses@nestjs.com>`,
+                },
+                template: {
+                    dir: __dirname + '/../templates',
+                    adapter: new ejs_adapter_1.EjsAdapter(),
+                    options: {
+                        strict: false,
+                    },
+                },
             }),
             news_module_1.NewsModule,
             user_module_1.UserModule,
