@@ -7,7 +7,14 @@ import {
   Param,
   Delete,
   UsePipes,
-  ValidationPipe, UploadedFile, MaxFileSizeValidator, FileTypeValidator, ParseFilePipe, UseInterceptors,
+  ValidationPipe,
+  UploadedFile,
+  MaxFileSizeValidator,
+  FileTypeValidator,
+  ParseFilePipe,
+  UseInterceptors,
+  HttpStatus,
+  Res,
 } from '@nestjs/common';
 import { editFileName, imageFileFilter } from '../utils/file-upload.utils';
 import { diskStorage } from 'multer';
@@ -74,5 +81,14 @@ export class CourseController {
   @Delete("delete/:id")
   remove(@Param('id') id: string) {
     return this.courseService.remove(+id);
+  }
+
+  @Get('img/:imagename')
+  getImage(@Param('imagename') image, @Res() res) {
+    const response = res.sendFile(image, { root: './uploads/img' });
+    return {
+      status: HttpStatus.OK,
+      data: response,
+    };
   }
 }

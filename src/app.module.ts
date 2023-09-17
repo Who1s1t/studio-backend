@@ -11,6 +11,7 @@ import { CourseModule } from './course/course.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { MailModule } from './mail/mail.module';
 import {EjsAdapter} from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
+import { TeacherModule } from './teacher/teacher.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import {EjsAdapter} from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
     CourseModule,
     ScheduleModule,
     MailModule,
+    TeacherModule,
   ],
   controllers: [AppController],
   providers: [AppService],

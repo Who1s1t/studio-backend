@@ -20,6 +20,7 @@ const course_module_1 = require("./course/course.module");
 const schedule_module_1 = require("./schedule/schedule.module");
 const mail_module_1 = require("./mail/mail.module");
 const ejs_adapter_1 = require("@nestjs-modules/mailer/dist/adapters/ejs.adapter");
+const teacher_module_1 = require("./teacher/teacher.module");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -66,6 +67,7 @@ exports.AppModule = AppModule = __decorate([
             course_module_1.CourseModule,
             schedule_module_1.ScheduleModule,
             mail_module_1.MailModule,
+            teacher_module_1.TeacherModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

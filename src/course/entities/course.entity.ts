@@ -22,6 +22,18 @@ export class CourseEntity {
     price: number;
 
     @Column()
+    hours: number;
+
+    @Column()
+    startDate: Date;
+
+    @Column()
+    endDate: Date;
+
+    @Column()
+    img: string;
+
+    @Column()
     shortDescription: string;
 
     @Column()
