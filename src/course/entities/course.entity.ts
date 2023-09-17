@@ -5,10 +5,11 @@ import {
     ManyToMany,
     JoinTable,
     CreateDateColumn,
-    UpdateDateColumn, OneToMany
+    UpdateDateColumn, OneToMany, ManyToOne, JoinColumn
 } from 'typeorm';
 import {UserEntity} from '../../user/entities/user.entity'
 import {ScheduleEntity} from "../../schedule/entities/schedule.entity";
+import {TeacherEntity} from "../../teacher/entities/teacher.entity";
 
 @Entity('course')
 export class CourseEntity {
@@ -45,6 +46,10 @@ export class CourseEntity {
 
     @OneToMany(() => ScheduleEntity, schedule => schedule.course)
     schedule: ScheduleEntity[];
+
+    @ManyToOne(()=> TeacherEntity, teacher => teacher.courses)
+    @JoinColumn({name: "teacher_id"})
+    teacher: TeacherEntity;
 
     @CreateDateColumn()
     createdDate: Date;

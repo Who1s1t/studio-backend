@@ -1,7 +1,8 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {CourseEntity} from "../../course/entities/course.entity";
 
 @Entity('teacher')
-export class Teacher {
+export class TeacherEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -14,6 +15,14 @@ export class Teacher {
     @Column()
     lastname: string;
 
+    @Column()
+    description: string;
+
+    @Column()
+    img: string;
+
+    @OneToMany(() => CourseEntity, course => course.teacher)
+    courses: CourseEntity[];
 
 
 
