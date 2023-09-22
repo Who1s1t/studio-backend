@@ -19,7 +19,7 @@ export class TeacherEntity {
     description: string;
 
     @Column()
-    img: string;
+    image: string;
 
     @OneToMany(() => CourseEntity, course => course.teacher)
     courses: CourseEntity[];

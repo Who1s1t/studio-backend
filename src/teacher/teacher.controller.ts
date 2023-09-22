@@ -51,7 +51,7 @@ export class TeacherController {
   )
   @ApiConsumes('multipart/form-data')
   create(@Body() createTeacherDto: CreateTeacherDto,@UploadedFile() file: Express.Multer.File) {
-    return this.teacherService.create(createTeacherDto);
+    return this.teacherService.create(createTeacherDto, file);
   }
 
   @Get()
@@ -64,9 +64,35 @@ export class TeacherController {
     return this.teacherService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTeacherDto: UpdateTeacherDto) {
-    return this.teacherService.update(+id, updateTeacherDto);
+  @Patch('update/:id')
+  @UsePipes(new ValidationPipe())
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties:{
+        firstname: { type: 'string' },
+        surname: { type: 'string' },
+        lastname: { type: 'string' },
+        description: { type: 'string' },
+        image: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(
+      FileInterceptor('image', {
+        storage: diskStorage({
+          destination: './uploads/img',
+          filename: editFileName,
+        }),
+        fileFilter: imageFileFilter,
+      }),
+  )
+  @ApiConsumes('multipart/form-data')
+  update(@Param('id') id: string, @Body() updateTeacherDto: UpdateTeacherDto, @UploadedFile() file: Express.Multer.File) {
+    return this.teacherService.update(+id, updateTeacherDto, file);
   }
 
   @Delete(':id')

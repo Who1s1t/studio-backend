@@ -2,7 +2,6 @@ import { extname } from 'path';
 import { HttpException, HttpStatus } from '@nestjs/common';
 // Разрешить только изображения
 export const imageFileFilter = (req, file, callback) => {
-    console.log(file,req)
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
         return callback(
             new HttpException(
@@ -24,11 +23,10 @@ export const imageFileFilter = (req, file, callback) => {
     callback(null, true);
 };
 export const editFileName = (req, file, callback) => {
-    const name = file.originalname.split('.')[0];
     const fileExtName = extname(file.originalname);
-    const randomName = Array(4)
+    const randomName = Array(10)
         .fill(null)
         .map(() => Math.round(Math.random() * 10).toString(10))
         .join('');
-    callback(null, `${name}${randomName}${fileExtName}`);
+    callback(null, `${randomName}${fileExtName}`);
 };
