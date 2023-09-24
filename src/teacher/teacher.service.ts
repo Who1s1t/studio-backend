@@ -48,7 +48,7 @@ export class TeacherService {
       }
     });
     if (!teacher) throw new NotFoundException("Преподаватель не найден!");
-    if (file) updateTeacherDto["img"] = file.filename;
+    if (file) updateTeacherDto["image"] = file.filename;
     return  await this.teacherRepository.update(id, updateTeacherDto);
   }
 

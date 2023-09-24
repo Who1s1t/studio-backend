@@ -84,7 +84,7 @@ export class TeacherController {
   @UseInterceptors(
       FileInterceptor('image', {
         storage: diskStorage({
-          destination: './uploads/img',
+          destination: './uploads/img/teacher',
           filename: editFileName,
         }),
         fileFilter: imageFileFilter,
@@ -101,8 +101,8 @@ export class TeacherController {
   }
 
   @Get('img/:imagename')
-  getImage(@Param('imagename') image, @Res() res) {
-    const response = res.sendFile(image, { root: './uploads/img' });
+  getImage(@Param('imagename') image: string, @Res() res) {
+    const response = res.sendFile(image, { root: './uploads/img/teacher' });
     return {
       status: HttpStatus.OK,
       data: response,

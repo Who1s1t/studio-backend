@@ -37,8 +37,12 @@ export class CourseController {
       properties:{
         name: { type: 'string' },
         price: { type: 'integer' },
-        shortDescription: { type: 'string' },
+        hours: {type: "integer"},
+        open: {type: "boolean"},
+        day: {type: "string"},
+        teacher: {type: "integer"},
         fullDescription: { type: 'string' },
+        shortDescription: { type: 'string' },
         image: {
           type: 'string',
           format: 'binary',
@@ -49,7 +53,7 @@ export class CourseController {
   @UseInterceptors(
       FileInterceptor('image', {
         storage: diskStorage({
-          destination: './uploads/img',
+          destination: './uploads/img/course',
           filename: editFileName,
         }),
         fileFilter: imageFileFilter,
@@ -67,6 +71,11 @@ export class CourseController {
     return this.courseService.findAll();
   }
 
+  @Get('open')
+  findAllOpen() {
+    return this.courseService.findAllOpen();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.courseService.findOne(+id);
@@ -74,8 +83,37 @@ export class CourseController {
 
   @Patch("update/:id")
   @UsePipes(new ValidationPipe())
-  update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
-    return this.courseService.update(+id, updateCourseDto);
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties:{
+        name: { type: 'string' },
+        price: { type: 'integer' },
+        hours: {type: "integer"},
+        open: {type: "boolean"},
+        day: {type: "string"},
+        teacher: {type: "integer"},
+        fullDescription: { type: 'string' },
+        shortDescription: { type: 'string' },
+        image: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(
+      FileInterceptor('image', {
+        storage: diskStorage({
+          destination: './uploads/img/course',
+          filename: editFileName,
+        }),
+        fileFilter: imageFileFilter,
+      }),
+  )
+  @ApiConsumes('multipart/form-data')
+  update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto, @UploadedFile() file: Express.Multer.File) {
+    return this.courseService.update(+id, updateCourseDto, file);
   }
 
   @Delete("delete/:id")
@@ -84,8 +122,8 @@ export class CourseController {
   }
 
   @Get('img/:imagename')
-  getImage(@Param('imagename') image, @Res() res) {
-    const response = res.sendFile(image, { root: './uploads/img' });
+  getImage(@Param('imagename') image: string, @Res() res) {
+    const response = res.sendFile(image, { root: './uploads/img/course' });
     return {
       status: HttpStatus.OK,
       data: response,

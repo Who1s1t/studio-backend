@@ -10,6 +10,7 @@ import {
 import {UserEntity} from '../../user/entities/user.entity'
 import {ScheduleEntity} from "../../schedule/entities/schedule.entity";
 import {TeacherEntity} from "../../teacher/entities/teacher.entity";
+import { Type } from 'class-transformer';
 
 @Entity('course')
 export class CourseEntity {
@@ -26,13 +27,19 @@ export class CourseEntity {
     hours: number;
 
     @Column()
-    startDate: Date;
+    day: string;
+
+    // @Column()
+    // startDate: Date;
+    //
+    // @Column()
+    // endDate: Date;
 
     @Column()
-    endDate: Date;
+    image: string;
 
     @Column()
-    img: string;
+    open: boolean;
 
     @Column()
     shortDescription: string;
