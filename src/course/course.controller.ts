@@ -81,6 +81,21 @@ export class CourseController {
     return this.courseService.findOne(+id);
   }
 
+
+  @Get(':id/adduser/:user_id')
+  addUser(@Param('id') id: string,@Param('user_id') user_id: string) {
+    return this.courseService.addUser(+id, +user_id);
+  }
+
+  @Delete(':id/deleteuser/:user_id')
+  deleteUser(@Param('id') id: string,@Param('user_id') user_id: string) {
+    return this.courseService.deleteUser(+id, +user_id);
+  }
+  @Delete(':id/deletealluser/')
+  deleteAllUser(@Param('id') id: string,) {
+    return this.courseService.deleteAllUser(+id);
+  }
+
   @Patch("update/:id")
   @UsePipes(new ValidationPipe())
   @ApiBody({

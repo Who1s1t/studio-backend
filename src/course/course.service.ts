@@ -5,12 +5,14 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {CourseEntity} from "./entities/course.entity";
 import {TeacherEntity} from "../teacher/entities/teacher.entity";
+import {UserEntity} from "../user/entities/user.entity";
 
 @Injectable()
 export class CourseService {
   constructor(
       @InjectRepository(CourseEntity) private courseRepository: Repository<CourseEntity>,
       @InjectRepository(TeacherEntity) private teacherRepository: Repository<TeacherEntity>,
+      @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
   ) {}
 
   async create(createCourseDto: CreateCourseDto, file: Express.Multer.File) {
@@ -42,6 +44,7 @@ export class CourseService {
   async findAll() {
     return await this.courseRepository.find({
       relations: {
+        users: true,
         teacher: true
       }
     });
@@ -53,6 +56,7 @@ export class CourseService {
         open: true
       },
       relations: {
+        users: true,
         teacher: true
       }
     });
@@ -64,6 +68,7 @@ export class CourseService {
         id
       },
       relations: {
+        users: true,
         teacher: true
       }
     });
@@ -93,5 +98,70 @@ export class CourseService {
     })
     if (!course) throw new NotFoundException("Курс не найден!")
     return await this.courseRepository.delete(id)
+  }
+
+  async addUser(id: number, user_id: number){
+    const course = await this.courseRepository.findOne({
+      where:{
+        id
+      },
+      relations: {
+        users: true,
+        teacher: true
+      }
+    });
+    if (!course) throw new NotFoundException("Курс не найден!");
+
+    const user = await this.userRepository.findOne({
+      where:{
+        id: user_id
+      },
+
+    });
+    if (!user) throw new NotFoundException("Студент не найден!");
+
+   course.users.push(user)
+    return await this.courseRepository.save(course)
+  }
+
+  async deleteUser(id: number, user_id: number){
+    const course = await this.courseRepository.findOne({
+      where:{
+        id
+      },
+      relations: {
+        users: true,
+        teacher: true
+      }
+    });
+    if (!course) throw new NotFoundException("Курс не найден!");
+
+    const user = await this.userRepository.findOne({
+      where:{
+        id: user_id
+      },
+
+    });
+    if (!user) throw new NotFoundException("Студент не найден!");
+
+
+    course.users = course.users.filter((user) => user.id !== user_id)
+    return await this.courseRepository.save(course)
+  }
+
+  async deleteAllUser(id: number){
+    const course = await this.courseRepository.findOne({
+      where:{
+        id
+      },
+      relations: {
+        users: true,
+        teacher: true
+      }
+    });
+    if (!course) throw new NotFoundException("Курс не найден!");
+
+    course.users = []
+    return await this.courseRepository.save(course)
   }
 }

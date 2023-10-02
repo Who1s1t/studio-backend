@@ -1,6 +1,7 @@
-import {IsNotEmpty} from "class-validator";
+import {IsNotEmpty, IsOptional} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
 import {TeacherEntity} from "../../teacher/entities/teacher.entity";
+import {UserEntity} from "../../user/entities/user.entity";
 
 export class CreateCourseDto {
 
@@ -35,6 +36,7 @@ export class CreateCourseDto {
     @IsNotEmpty()
     @ApiProperty()
     teacher: TeacherEntity
+
 
     @IsNotEmpty()
     @ApiProperty()
