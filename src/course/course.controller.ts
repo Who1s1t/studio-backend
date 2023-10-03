@@ -14,7 +14,7 @@ import {
   ParseFilePipe,
   UseInterceptors,
   HttpStatus,
-  Res,
+  Res, UseGuards,
 } from '@nestjs/common';
 import { editFileName, imageFileFilter } from '../utils/file-upload.utils';
 import { diskStorage } from 'multer';
@@ -23,6 +23,8 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import {ApiBody, ApiConsumes, ApiTags} from "@nestjs/swagger";
 import {FileInterceptor} from "@nestjs/platform-express";
+import {AdminGuard} from "../guard/admin.guard";
+import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
 
 @Controller('course')
 @ApiTags('course')
@@ -30,6 +32,7 @@ export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
   @Post("create")
+  @UseGuards(JwtAuthGuard,AdminGuard)
   @UsePipes(new ValidationPipe())
   @ApiBody({
     schema: {
@@ -67,6 +70,7 @@ export class CourseController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard,AdminGuard)
   findAll() {
     return this.courseService.findAll();
   }
@@ -83,20 +87,24 @@ export class CourseController {
 
 
   @Get(':id/adduser/:user_id')
+  @UseGuards(JwtAuthGuard,AdminGuard)
   addUser(@Param('id') id: string,@Param('user_id') user_id: string) {
     return this.courseService.addUser(+id, +user_id);
   }
 
   @Delete(':id/deleteuser/:user_id')
+  @UseGuards(JwtAuthGuard,AdminGuard)
   deleteUser(@Param('id') id: string,@Param('user_id') user_id: string) {
     return this.courseService.deleteUser(+id, +user_id);
   }
   @Delete(':id/deletealluser/')
+  @UseGuards(JwtAuthGuard,AdminGuard)
   deleteAllUser(@Param('id') id: string,) {
     return this.courseService.deleteAllUser(+id);
   }
 
   @Patch("update/:id")
+  @UseGuards(JwtAuthGuard,AdminGuard)
   @UsePipes(new ValidationPipe())
   @ApiBody({
     schema: {
@@ -132,6 +140,7 @@ export class CourseController {
   }
 
   @Delete("delete/:id")
+  @UseGuards(JwtAuthGuard,AdminGuard)
   remove(@Param('id') id: string) {
     return this.courseService.remove(+id);
   }

@@ -8,7 +8,7 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
-  UseInterceptors, UploadedFile, Res, HttpStatus
+  UseInterceptors, UploadedFile, Res, HttpStatus, UseGuards
 } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
@@ -17,6 +17,8 @@ import {ApiBody, ApiConsumes, ApiTags} from "@nestjs/swagger";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {diskStorage} from "multer";
 import {editFileName, imageFileFilter} from "../utils/file-upload.utils";
+import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
+import {AdminGuard} from "../guard/admin.guard";
 
 @Controller('teacher')
 @ApiTags('teacher')
@@ -24,6 +26,7 @@ export class TeacherController {
   constructor(private readonly teacherService: TeacherService) {}
 
   @Post("create")
+  @UseGuards(JwtAuthGuard,AdminGuard)
   @UsePipes(new ValidationPipe())
   @ApiBody({
     schema: {
@@ -65,6 +68,7 @@ export class TeacherController {
   }
 
   @Patch('update/:id')
+  @UseGuards(JwtAuthGuard,AdminGuard)
   @UsePipes(new ValidationPipe())
   @ApiBody({
     schema: {
@@ -96,6 +100,7 @@ export class TeacherController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard,AdminGuard)
   remove(@Param('id') id: string) {
     return this.teacherService.remove(+id);
   }
