@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateNewsDto } from './dto/create-news.dto';
@@ -11,12 +11,13 @@ export class NewsService {
       @InjectRepository(NewsEntity) private newsRepository: Repository<NewsEntity>,
   ) {}
 
-  async create(createNewsDto: CreateNewsDto){
+  async create(createNewsDto: CreateNewsDto, file: Express.Multer.File){
+    if (!file) throw new BadRequestException("Изображение обязательно!");
     const newNews = {
       title: createNewsDto.title,
       shortDescription: createNewsDto.shortDescription,
       fullDescription: createNewsDto.fullDescription,
-      author: createNewsDto.author,
+      image: file.filename,
 
     }
     return await this.newsRepository.save(newNews)
@@ -34,13 +35,14 @@ export class NewsService {
     });
   }
 
-  async update(id: number, updateNewsDto:UpdateNewsDto) {
+  async update(id: number, updateNewsDto:UpdateNewsDto, file: Express.Multer.File) {
     const news = await this.newsRepository.findOne({
       where:{
         id
       }
     })
     if (!news) throw new NotFoundException("Новость не найдена!")
+    if (file) updateNewsDto["image"] = file.filename;
     return await this.newsRepository.update(id, updateNewsDto)
   }
 

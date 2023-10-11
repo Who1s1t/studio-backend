@@ -15,8 +15,5 @@ export class CreateNewsDto {
     @ApiProperty()
     fullDescription: string
 
-    @IsNotEmpty()
-    @ApiProperty()
-    author: string
 
 }

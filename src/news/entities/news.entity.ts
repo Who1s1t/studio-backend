@@ -15,7 +15,7 @@ export class NewsEntity {
     fullDescription: string;
 
     @Column()
-    author: string;
+    image: string;
 
     @CreateDateColumn()
     createdDate: Date;

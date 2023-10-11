@@ -3,7 +3,7 @@ export declare class NewsEntity {
     title: string;
     shortDescription: string;
     fullDescription: string;
-    author: string;
+    image: string;
     createdDate: Date;
     updatedDate: Date;
     deletedAt?: Date;

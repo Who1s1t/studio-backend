@@ -21,12 +21,14 @@ let NewsService = exports.NewsService = class NewsService {
     constructor(newsRepository) {
         this.newsRepository = newsRepository;
     }
-    async create(createNewsDto) {
+    async create(createNewsDto, file) {
+        if (!file)
+            throw new common_1.BadRequestException("Изображение обязательно!");
         const newNews = {
             title: createNewsDto.title,
             shortDescription: createNewsDto.shortDescription,
             fullDescription: createNewsDto.fullDescription,
-            author: createNewsDto.author,
+            image: file.filename,
         };
         return await this.newsRepository.save(newNews);
     }
@@ -41,7 +43,7 @@ let NewsService = exports.NewsService = class NewsService {
             }
         });
     }
-    async update(id, updateNewsDto) {
+    async update(id, updateNewsDto, file) {
         const news = await this.newsRepository.findOne({
             where: {
                 id
@@ -49,6 +51,8 @@ let NewsService = exports.NewsService = class NewsService {
         });
         if (!news)
             throw new common_1.NotFoundException("Новость не найдена!");
+        if (file)
+            updateNewsDto["image"] = file.filename;
         return await this.newsRepository.update(id, updateNewsDto);
     }
     async remove(id) {

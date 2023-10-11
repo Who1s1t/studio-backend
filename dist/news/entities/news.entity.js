@@ -32,7 +32,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], NewsEntity.prototype, "author", void 0);
+], NewsEntity.prototype, "image", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

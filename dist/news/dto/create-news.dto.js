@@ -30,9 +30,4 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateNewsDto.prototype, "fullDescription", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], CreateNewsDto.prototype, "author", void 0);
 //# sourceMappingURL=create-news.dto.js.map
