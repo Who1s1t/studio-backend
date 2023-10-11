@@ -20,11 +20,11 @@ export class UserController {
 
 
 
-  @Get(':email')
-  @UseGuards(JwtAuthGuard,AdminGuard)
-  findOne(@Param('email') email: string) {
-    return this.userService.findOne(email);
-  }
+  // @Get(':email')
+  // @UseGuards(JwtAuthGuard,AdminGuard)
+  // findOne(@Param('email') email: string) {
+  //   return this.userService.findOne(email);
+  // }
 
 
 
