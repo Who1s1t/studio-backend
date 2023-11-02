@@ -13,6 +13,9 @@ export class UserEntity {
     email: string;
 
     @Column()
+    phoneNumber: string;
+
+    @Column()
     password: string;
 
     @Column()
@@ -20,6 +23,9 @@ export class UserEntity {
 
     @Column()
     lastName: string;
+
+    @Column()
+    birthday: Date;
 
    @ManyToMany(()=> CourseEntity, course => course.users)
     courses: CourseEntity[];
